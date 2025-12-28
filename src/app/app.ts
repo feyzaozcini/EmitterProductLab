@@ -41,11 +41,6 @@ export class App {
     this.selectedProductId.set(productId);
   }
 
-  //Refactor ödevi NgModel'e ceviriniz - Tamamlandı
-  //NgModel ile two-way binding kullanılıyor, event handler'lar kaldırıldı
-
-  //Ödev custom pipe dısında düz filtreleme... - Tamamlandı
-  //Computed signal ile filtreleme yapılıyor, pipe kaldırıldı
   filteredProducts = computed(() => {
     const products = this.products();
     const searchText = this.searchText().trim().toLowerCase();
@@ -57,8 +52,6 @@ export class App {
       return nameOk && priceOk;
     });
   });
-
-  //Todo Sepet işlemleri :
 
   cart = signal<CartItem[]>([]);
 
