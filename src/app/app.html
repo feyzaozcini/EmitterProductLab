@@ -1,0 +1,62 @@
+<div class="cart-section">
+  <h2>🛒 Sepetim (@if(cart().length > 0){ {{cart().length}} ürün })</h2>
+
+  @if(cart().length === 0){
+    <div class="cart-empty">Sepetiniz şu an boş</div>
+  }@else {
+    <div class="cart-items">
+      @for(item of cart();track item.product.id){
+        <div class="cart-item">
+          <div class="item-info">
+            <strong>{{ item.product.name }}</strong>
+            <div class="item-details">
+              <span>Adet: {{ item.quantity }}</span>
+              <span>Birim: {{ item.product.price | currency : 'USD' : 'symbol' }}</span>
+              <span class="item-total">Toplam: {{ item.product.price * item.quantity | currency : 'USD' : 'symbol' }}</span>
+            </div>
+          </div>
+          <button type="button" class="remove-btn" (click)="removeFromCart(item.product.id)" title="Sepetten çıkar">
+            ➖
+          </button>
+        </div>
+      }
+    </div>
+
+    <div class="cart-total">
+      <strong>Genel Toplam: {{cartTotal() | currency:'USD':'symbol'}}</strong>
+    </div>
+  }
+</div>
+
+<!--Secili ürün gösterimi-->
+
+@if(selectedProduct() !== null){
+<div class="selected">
+  <b>Secilen ürün : </b>
+  {{ selectedProduct()!.name }}
+  {{ selectedProduct()!.price | currency : 'USD' : 'symbol' }}
+</div>
+}@else {
+<div class="selected">Henüz ürün secilmedi</div>
+}
+
+<hr />
+
+<h2>Ürün listesi</h2>
+
+<label>
+  Ürün adı ara:
+  <input type="text" placeholder="ör:klav" [(ngModel)]="searchText" />
+</label>
+
+<label>
+  Maksimum fiyat:
+  <input type="number" placeholder="ör:3000" [(ngModel)]="maxPrice" />
+</label>
+
+<app-product-list
+  [products]="filteredProducts()"
+  (addToCart)="onAddToCart($event)"
+  (selected)="onChildSelected($event)"
+>
+</app-product-list>
