@@ -41,6 +41,7 @@ export class App {
     this.selectedProductId.set(productId);
   }
 
+  //custom pipe kaldırıldı. 
   filteredProducts = computed(() => {
     const products = this.products();
     const searchText = this.searchText().trim().toLowerCase();
